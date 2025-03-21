@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Prototype Chatbot 3D</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { width: 100vw; height: 100vh; display: block; }
+    </style>
+</head>
+<body>
+  
+<audio id="voice" autoplay>
+  <source src="assets/insane_voice_demo.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+    <canvas id="scene"></canvas>
+    <script type="module" src="scripts/main.js"></script>
+
+<!-- Floating Chat Button -->
+<div id="chat-toggle" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; background-color: #111; color: white; border: 2px solid #0ff; border-radius: 50%; width: 60px; height: 60px; text-align: center; line-height: 60px; font-size: 24px; cursor: pointer;">💬</div>
+
+<!-- Chat Panel -->
+<div id="chat-panel" style="display: none; position: fixed; bottom: 100px; right: 20px; width: 400px; height: 500px; background-color: rgba(0,0,0,0.9); color: #0ff; font-family: monospace; border: 2px solid #0ff; border-radius: 10px; z-index: 999; padding: 10px; overflow: auto;">
+  <div id="chat-log" style="height: 400px; overflow-y: auto; margin-bottom: 10px;"></div>
+  <input id="chat-input" type="text" placeholder="Pose ta question..." style="width: 75%; padding: 5px; background: black; color: #0ff; border: 1px solid #0ff;">
+  <button id="send-btn" style="width: 20%; background: #0ff; color: black; font-weight: bold; border: none;">Send</button>
+</div>
+
+<script>
+document.getElementById("chat-toggle").onclick = () => {
+  const panel = document.getElementById("chat-panel");
+  panel.style.display = (panel.style.display === "none") ? "block" : "none";
+};
+
+document.getElementById("send-btn").onclick = () => {
+  const input = document.getElementById("chat-input");
+  const chatLog = document.getElementById("chat-log");
+  const userText = input.value;
+  if (!userText) return;
+  chatLog.innerHTML += "<div><strong>Toi :</strong> " + userText + "</div>";
+  input.value = "";
+
+  // Simulation de réponse IA + lecture voix
+  const response = "Ceci est une réponse générée par ton IA Cyberpunk. Je suis toujours là pour toi.";
+  chatLog.innerHTML += "<div><strong>INSANE IA :</strong> " + response + "</div>";
+
+  // Joue la voix (pré-générée)
+  const voice = new Audio("assets/insane_voice_demo.mp3");
+  voice.play();
+};
+</script>
+
+</body>
+</html>
